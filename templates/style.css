@@ -1,0 +1,133 @@
+/* Ümumi tənzimləmələr */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Qara arxa fon və tam mərkəzləşdirmə */
+body {
+    background-color: #0a0a0a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #ffffff;
+}
+
+/* Əsas qutunun (kartın) dizaynı */
+.login-container {
+    background-color: #141414;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 102, 255, 0.15);
+    border: 1px solid #1f1f1f;
+    width: 90%;
+    max-width: 400px;
+}
+
+/* Başlıq */
+h1 {
+    color: #3399ff;
+    margin-bottom: 25px;
+    font-size: 26px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Input sahələri üçün dizayn */
+.input-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    color: #a0a0a0;
+    margin-bottom: 8px;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: #0a0a0a;
+    border: 1px solid #2a2a2a;
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 15px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Inputa kliklədikdə (focus) yaranan göy effekt */
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: #3399ff;
+    box-shadow: 0 0 8px rgba(0, 102, 255, 0.2);
+    outline: none;
+}
+
+/* Əsas "Sign In" düyməsinin dizaynı (Tam göy rəng) */
+.btn-signin {
+    background-color: #0066ff;
+    color: #ffffff;
+    border: none;
+    padding: 14px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
+    transition: 0.3s ease;
+}
+
+.btn-signin:hover {
+    background-color: #0052cc;
+    box-shadow: 0 4px 15px rgba(0, 102, 255, 0.4);
+}
+
+/* Qeydiyyat hissəsini yuxarıdan ayıran xətt */
+.action-group {
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px solid #2a2a2a;
+    text-align: center;
+}
+
+.action-group span {
+    display: block;
+    font-size: 14px;
+    color: #888888;
+    margin-bottom: 15px;
+}
+
+/* İkinci "Sign Up" düyməsinin dizaynı (Göy çərçivəli) */
+.btn-signup {
+    background-color: transparent;
+    color: #3399ff;
+    border: 1px solid #3399ff;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    transition: 0.3s ease;
+}
+
+.btn-signup:hover {
+    background-color: rgba(0, 102, 255, 0.1);
+}
+
+/* Düymələrə basıldıqda yaranan kiçilmə animasiyası */
+.btn-signin:active,
+.btn-signup:active {
+    transform: scale(0.97);
+}

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İmarət Blog - Məqalələr</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 80px;
+        }
+
+        /* Naviqasiya Paneli */
+        header {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            margin-top: 15px;
+            background-color: #141414;
+            border: 1px solid #1f1f1f;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 102, 255, 0.08);
+        }
+
+        header h1 {
+            color: #3399ff;
+            font-size: 24px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-email {
+            font-size: 14px;
+            color: #a0a0a0;
+        }
+
+        .btn-logout {
+            background-color: transparent;
+            color: #ff4d4d;
+            border: 1px solid #ff4d4d;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            background-color: rgba(255, 77, 77, 0.1);
+        }
+
+        /* Əsas Konteyner */
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin-top: 25px;
+        }
+
+        .section-title {
+            color: #3399ff;
+            font-size: 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #1f1f1f;
+            padding-bottom: 10px;
+        }
+
+        /* Məqalə Kartı */
+        .post-card {
+            background-color: #141414;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #1f1f1f;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .post-title {
+            color: #ffffff;
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .post-author {
+            background-color: rgba(0, 102, 255, 0.15);
+            color: #3399ff;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            border: 1px solid rgba(0, 102, 255, 0.3);
+        }
+
+        .post-date {
+            font-size: 12px;
+            color: #666666;
+            margin-bottom: 15px;
+        }
+
+        .post-content {
+            color: #d0d0d0;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            white-space: pre-line;
+        }
+
+        /* Rəylər Bölməsi */
+        .comments-section {
+            border-top: 1px solid #222222;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+
+        .comments-title {
+            font-size: 14px;
+            color: #888888;
+            margin-bottom: 10px;
+        }
+
+        .comment-item {
+            background-color: #0a0a0a;
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border: 1px solid #1a1a1a;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #3399ff;
+            margin-bottom: 4px;
+        }
+
+        .comment-date {
+            color: #555555;
+        }
+
+        .comment-text {
+            font-size: 13px;
+            color: #cccccc;
+        }
+
+        /* Rəy Yazmaq Xanası */
+        .add-comment-box {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .add-comment-box input {
+            flex: 1;
+            padding: 10px 14px;
+            background-color: #0a0a0a;
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 13px;
+        }
+
+        .add-comment-box input:focus {
+            border-color: #3399ff;
+            outline: none;
+        }
+
+        .btn-comment {
+            background-color: #0066ff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .btn-comment:hover {
+            background-color: #0052cc;
+        }
+
+        /* Sabit Floating Plus (+) Düyməsi */
+        .fab-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #0066ff;
+            color: #ffffff;
+            font-size: 32px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 102, 255, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            z-index: 1000;
+        }
+
+        .fab-btn:hover {
+            transform: scale(1.1);
+            background-color: #0052cc;
+        }
+
+        /* Modal (Məqalə Əlavə Etmə Pəncərəsi) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .modal-card {
+            background-color: #141414;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #1f1f1f;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 8px 30px rgba(0, 102, 255, 0.25);
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h3 {
+            color: #3399ff;
+            font-size: 20px;
+        }
+
+        .btn-close {
+            background: none;
+            border: none;
+            color: #a0a0a0;
+            font-size: 28px;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .btn-close:hover {
+            color: #ffffff;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: #0a0a0a;
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 14px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            border-color: #3399ff;
+            outline: none;
+        }
+
+        .btn-publish {
+            background-color: #0066ff;
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s ease;
+        }
+
+        .btn-publish:hover {
+            background-color: #0052cc;
+        }
+
+        .no-posts {
+            text-align: center;
+            color: #666666;
+            padding: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navbar -->
+    <header>
+        <h1>İmarət Blog</h1>
+        <div class="user-info">
+            <span class="user-email" id="currentUser">İstifadəçi: Anonymous</span>
+            <button class="btn-logout" onclick="logout()">Çıxış</button>
+        </div>
+    </header>
+
+    <!-- Əsas Məqalələr Akışı -->
+    <div class="container">
+        <h2 class="section-title">Bütün Məqalələr</h2>
+        <div id="postsFeed">
+            <p class="no-posts">Məqalələr yüklənir...</p>
+        </div>
+    </div>
+
+    <!-- Sabit (+) Məqalə Əlavə Et Düyməsi -->
+    <button class="fab-btn" id="openModalBtn" title="Yeni Məqalə Yaz">+</button>
+
+    <!-- Modal (Yeni Məqalə Yaratma Pəncərəsi) -->
+    <div class="modal-overlay" id="postModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Yeni Məqalə Əlavə Et</h3>
+                <button class="btn-close" id="closeModalBtn">&times;</button>
+            </div>
+            <form id="createPostForm">
+                <div class="input-group">
+                    <input type="text" id="postTitle" placeholder="Məqalənin başlığı..." required>
+                </div>
+                <div class="input-group">
+                    <textarea id="postContent" placeholder="Məqalə mətni..." required></textarea>
+                </div>
+                <button type="submit" class="btn-publish">Paylaş</button>
+                <p id="postStatus" style="font-size: 13px; margin-top: 10px; display: none; text-align: center;"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        let loggedUser = localStorage.getItem('userEmail') || 'user@gmail.com';
+        document.getElementById('currentUser').textContent = loggedUser;
+
+        // Modal Elements
+        const modal = document.getElementById('postModal');
+        const openModalBtn = document.getElementById('openModalBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+
+        // Modal Açma Funksiyası
+        function openModal() {
+            if (modal) modal.style.display = 'flex';
+        }
+
+        // Modal Bağlama Funksiyası
+        function closeModal() {
+            if (modal) {
+                modal.style.display = 'none';
+                document.getElementById('postStatus').style.display = 'none';
+            }
+        }
+
+        // Event Listeners for Modal
+        if (openModalBtn) {
+            openModalBtn.addEventListener('click', openModal);
+        }
+
+        if (closeModalBtn) {
+            closeModalBtn.addEventListener('click', closeModal);
+        }
+
+        // Modal qara fonuna kliklədikdə də bağlansın
+        window.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Səhifə açılan kimi məqalələri yükləyirik
+        document.addEventListener('DOMContentLoaded', loadPosts);
+
+        // 1. Məqalələri və Rəyləri Yükləmək
+        function loadPosts() {
+            fetch('http://127.0.0.1:5000/get_posts')
+            .then(response => response.json())
+            .then(data => {
+                const feed = document.getElementById('postsFeed');
+                feed.innerHTML = '';
+
+                if (data.status === 'success' && data.posts.length > 0) {
+                    data.posts.forEach(post => {
+                        let commentsHTML = '';
+                        if (post.comments && post.comments.length > 0) {
+                            post.comments.forEach(c => {
+                                commentsHTML += `
+                                    <div class="comment-item">
+                                        <div class="comment-header">
+                                            <span>${escapeHTML(c.author)}</span>
+                                            <span class="comment-date">${c.date}</span>
+                                        </div>
+                                        <div class="comment-text">${escapeHTML(c.content)}</div>
+                                    </div>
+                                `;
+                            });
+                        } else {
+                            commentsHTML = '<p style="font-size: 12px; color: #555;">Hələ rəy yoxdur. İlk rəyi siz yazın!</p>';
+                        }
+
+                        const postCard = `
+                            <div class="post-card">
+                                <div class="post-header">
+                                    <h3 class="post-title">${escapeHTML(post.title)}</h3>
+                                    <span class="post-author">✍️ ${escapeHTML(post.author)}</span>
+                                </div>
+                                <div class="post-date">📅 ${post.date}</div>
+                                <p class="post-content">${escapeHTML(post.content)}</p>
+
+                                <div class="comments-section">
+                                    <div class="comments-title">💬 Rəylər (${post.comments.length})</div>
+                                    <div id="comments-list-${post.id}">
+                                        ${commentsHTML}
+                                    </div>
+
+                                    <div class="add-comment-box">
+                                        <input type="text" id="comment-input-${post.id}" placeholder="Rəyinizi yazın..." required>
+                                        <button class="btn-comment" onclick="submitComment(${post.id})">Göndər</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        feed.innerHTML += postCard;
+                    });
+                } else {
+                    feed.innerHTML = '<p class="no-posts">Hələ heç bir məqalə paylaşılmayıb.</p>';
+                }
+            })
+            .catch(err => {
+                document.getElementById('postsFeed').innerHTML = '<p class="no-posts" style="color: #ff4d4d;">Məqalələri yükləmək mümkün olmadı.</p>';
+            });
+        }
+
+        // 2. Rəy Göndərmək
+        function submitComment(postId) {
+            const inputField = document.getElementById(`comment-input-${postId}`);
+            const content = inputField.value.trim();
+
+            if (!content) return;
+
+            const formData = new FormData();
+            formData.append('post_id', postId);
+            formData.append('content', content);
+            formData.append('author_email', loggedUser);
+
+            fetch('http://127.0.0.1:5000/add_comment', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    inputField.value = '';
+                    loadPosts();
+                } else {
+                    alert(data.message);
+                }
+            });
+        }
+
+        // 3. Yeni Məqalə Paylaşmaq
+        document.getElementById('createPostForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const title = document.getElementById('postTitle').value;
+            const content = document.getElementById('postContent').value;
+            const statusMsg = document.getElementById('postStatus');
+
+            const formData = new FormData();
+            formData.append('title', title);
+            formData.append('content', content);
+            formData.append('author_email', loggedUser);
+
+            fetch('http://127.0.0.1:5000/create_post', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                statusMsg.style.display = 'block';
+                statusMsg.textContent = data.message;
+
+                if (data.status === 'success') {
+                    statusMsg.style.color = '#00e676';
+                    document.getElementById('postTitle').value = '';
+                    document.getElementById('postContent').value = '';
+                    setTimeout(() => {
+                        closeModal();
+                        loadPosts();
+                    }, 1000);
+                } else {
+                    statusMsg.style.color = '#ff4d4d';
+                }
+            });
+        });
+
+        function logout() {
+            localStorage.removeItem('userEmail');
+            window.location.href = 'index.html';
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g,
+                tag => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                }[tag] || tag)
+            );
+        }
+    </script>
+</body>
+</html>

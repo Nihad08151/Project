@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İmarət Blog - Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="login-container">
+        <h1>Welcome to My Blog</h1>
+
+        <!-- Formun id-sini 'loginForm' etdik, action və method-u sildik, çünki JS həll edəcək -->
+        <form id="loginForm">
+
+            <div class="input-group">
+                <label>Email address:</label>
+                <input type="email" name="email" placeholder="example@gmail.com" required>
+            </div>
+
+            <div class="input-group">
+                <label>Password:</label>
+                <input type="password" name="password" placeholder="••••••••" required>
+            </div>
+
+            <!-- Xəta mesajının görünəcəyi yer (başlanğıcda gizlidir) -->
+            <p id="errorMessage" style="color: #ff4d4d; font-size: 14px; display: none; margin-bottom: 15px; text-align: center;"></p>
+
+            <button type="submit" class="btn-signin">Sign In</button>
+
+        </form>
+
+        <div class="action-group">
+            <span>If you don't have an account:</span>
+            <a href="sign_up.html" class="btn-signup">Sign Up</a>
+        </div>
+    </div>
+
+    <!-- JavaScript Kodu -->
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            // Düyməyə basanda səhifənin yenilənməsinin və ya başqa yerə keçməsinin qarşısını alır
+            e.preventDefault();
+
+            // Formdakı email və şifrəni götürür
+            const formData = new FormData(this);
+            const errorMsg = document.getElementById('errorMessage');
+
+            // Məlumatı Python-a (Backend-ə) göndərir
+            fetch('http://127.0.0.1:5000/login', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Əgər database-də varsa, növbəti səhifəyə keç
+                    window.location.href = 'blog.html';
+                } else {
+                    // Əgər database-də yoxdursa, qırmızı xəta mesajını göstər
+                    errorMsg.style.display = 'block';
+                    errorMsg.textContent = data.message;
+                }
+            })
+            .catch(error => {
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = "Serverlə əlaqə qurulmadı. Python kodunun işlədiyinə əmin olun.";
+            });
+        });
+    </script>
+
+</body>
+</html>
